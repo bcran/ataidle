@@ -1,0 +1,34 @@
+PREFIX = /usr/local
+CC ?= gcc
+LD ?= ld
+CFLAGS += -std=c99 -Wall -pedantic
+LIBS =
+SOURCES = ataidle.c
+MAN = ataidle.8
+PROG = ataidle
+MAINTAINER = Bruce Cran <bruce@cran.org.uk>
+
+all:	ataidle
+
+ataidle:  ataidle.o util.o
+	$(CC) $(CFLAGS) $(LIBS) -o ataidle main.c ataidle.o util.o
+
+main.c:
+	$(CC) $(CFLAGS) $(LIBS) -o ataidle main.c $(LIBS)
+
+ataidle.o:
+	$(CC) $(CFLAGS) $(LIBS) -c freebsd/ataidle.c
+
+util.o:
+	$(CC) $(CFLAGS) $(LIBS) -c mi/util.c
+
+install:
+	install $(PROG) $(PREFIX)/sbin
+	install $(MAN)  $(PREFIX)/man/man8
+
+uninstall:
+	rm $(PREFIX)/sbin/$(PROG)
+	rm $(PREFIX)/man/man8/$(MAN)
+
+clean: 
+	rm -f *.o $(PROG)

@@ -1,26 +1,15 @@
-PREFIX = /usr/local
-CC ?= gcc
-CFLAGS += -std=c99 -Wall -pedantic
-LIBS =
-SOURCES = ataidle.c
-MAN = ataidle.8
-PROG = ataidle
-MAINTAINER = Bruce Cran <bruce@cran.org.uk>
+all:
+	/bin/sh Make.sh	clean all
+#make -f Makefile.`uname -s` clean all
 
-all:	ataidle
-
-ataidle:	ataidle.c
-
-ataidle.c:
-	$(CC) $(CFLAGS) $(LIBS) -o $(PROG) $(SOURCES)
+clean:
+	/bin/sh Make.sh clean
+#	make -f Makefile.`uname -s` clean
 
 install:
-	install $(PROG) $(PREFIX)/sbin
-	install $(MAN)  $(PREFIX)/man/man8
+	/bin/sh Make.sh all install
+#	make -f Makefile.`uname -s` all install
 
 uninstall:
-	rm $(PREFIX)/sbin/$(PROG)
-	rm $(PREFIX)/man/man8/$(MAN)
-
-clean: 
-	rm -f *.o $(PROG)
+	/bin/sh Make.sh uninstall
+#make -f Makefile.`uname -s` uninstall
