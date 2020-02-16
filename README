@@ -1,0 +1,13 @@
+ataidle sets the idle timer on ATA hard drives, so they spin down when the 
+period of inactivity has expired.  To use it, you must be running FreeBSD 
+with ATAng, so basically FreeBSD 5.1 or newer.
+
+Usage: atacontrol -S <idle_mins> <channel> <device>
+
+You can find the correct channel and device from the output of 
+'atacontrol list'.   ataidle does not currently do extensive error checking 
+for running the commands on channels/devices which do not have ATA drives 
+attached.  This should be harmless, and cause it to pause until the 
+timeout (100s) has elapsed.  You may get a messages from the kernel about 
+a missing interrupt, but from my testing it would not appear to cause 
+problems.
