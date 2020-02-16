@@ -108,7 +108,7 @@ char * ata_getversionstring( unsigned short ata_version )
 // standard *NIX usage instructions
 void usage()
 {
-	printf( "ataidle version 0.6\n\n"
+	printf( "ataidle version 0.7\n\n"
 			"usage: \n"
 			"ataidle [-h] [-l] [-i] [-s] [-I idle] [-S standby] [-A acoustic] [-P apm]\n"
 			"\tchannel device\n\n"
@@ -404,7 +404,10 @@ ata_setidle(struct ATA *ata, uint32_t chan, uint32_t dev, uint32_t idle_mins)
 
 	rc = ata_getidleval( idle_mins, &timer_val );	
 		
-	ata_setataparams(ata, timer_val, 0);
+	if(timer_val == ATA_IDLEVAL_IMMEDIATE)
+		ata_setataparams(ata, 0, 0);
+	else
+		ata_setataparams(ata, timer_val, 0);
 
 	// send the IDLE command to the drive
 	if(!rc) {
@@ -442,7 +445,10 @@ ata_setstandby(struct ATA *ata, uint32_t chan, uint32_t dev, uint32_t standby_mi
 
 	rc = ata_getidleval( standby_mins, &timer_val );	
 
-	ata_setataparams(ata, timer_val, 0);
+	if (timer_val == ATA_IDLEVAL_IMMEDIATE)
+		ata_setataparams(ata, 0, 0);
+	else
+		ata_setataparams(ata, timer_val, 0);
 
 	// send the STANDBY command to the drive
 	if(!rc) {

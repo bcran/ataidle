@@ -32,7 +32,7 @@
  * ATAidle: a program to set the idle spindown timeout on ATA drives
  * 
  * Author: Bruce Cran <bruce@cran.org.uk>
- * Version: 0.6
+ * Version: 0.7
  *
  */
 

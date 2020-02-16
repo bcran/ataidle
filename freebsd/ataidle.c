@@ -32,7 +32,7 @@
  * ATAidle: a program to set the idle spindown timeout on ATA drives
  * 
  * Author: Bruce Cran <bruce@cran.org.uk>
- * Version: 0.6
+ * Version: 0.7
  *
  */
 
@@ -86,7 +86,7 @@ ata_cmd(struct ATA *ata, int chan, int dev, int atacmd, int drivercmd)
 	int32_t rc = 0;
 
 	// check that the device actually exists, first
-	if(!ata_devpresent( ata, chan, dev ) && (atacmd != ATAGMAXCHANNEL)) {
+	if(!ata_devpresent( ata, chan, dev ) && (drivercmd != ATAGMAXCHANNEL)) {
 		rc = -1;
 	}
 

@@ -32,7 +32,7 @@
  * ATAidle: a program to set the idle spindown timeout on ATA drives
  * 
  * Author: Bruce Cran <bruce@cran.org.uk>
- * Version: 0.6
+ * Version: 0.7
  *
  */
 
@@ -66,7 +66,7 @@ extern int optind, optopt, opterr, optreset;
 int main( int argc, char ** argv )
 {
 	int rc = 0;
-	int ch, chan, dev;
+	int ch, chan, dev = -1;
 	struct ATA *ata = (struct ATA*) malloc(sizeof(struct ATA));
 	long opt_val;
 	uint32_t maxchan = 0;
@@ -95,7 +95,9 @@ int main( int argc, char ** argv )
 	}
 	
 	if(!rc && needchandev) {
-		rc = ata_strtolong(argv[argc-1], (long*) &dev);
+		long tmp_ldev;
+		rc = ata_strtolong(argv[argc-1], &tmp_ldev);
+		dev = (int) tmp_ldev;
 		if( (rc) || (dev < 0) || (dev > 1) ) {
 			printf("invalid device\n");
 			rc = -1;

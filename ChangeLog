@@ -56,3 +56,11 @@ Tue June 29 23:40 2004  brucec
 		returning an error code for ATA_GETMAXCHAN.
 		At the same time, add return code checking for 
 		all malloc calls, and handle appropriately
+
+Sun July 18 19:48 2004  brucec
+	*	Fixed command-line handling to make it work
+		on amd64 platform.  Also fixed typo in freebsd
+		code.
+Mon Aug 09 11:00 2004   brucec
+	*	Miscellaneous bug-fixes to prevent crashes
+		under unusual situations

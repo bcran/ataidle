@@ -22,6 +22,6 @@ static const uint32_t ATA_APM_MINPERF			= 0x01;
 static const uint32_t ATA_APM_MAXPERF			= 0xFE;
 static const uint32_t ATA_POWERSTATUS_GET		= 0xE5;
 static const uint32_t ATA_CMD_TIMEOUT			= 10;
-static const uint32_t ATA_IDLEVAL_IMMEDIATE		= 300;
+static const uint32_t ATA_IDLEVAL_IMMEDIATE		= 900;
 
 #endif
