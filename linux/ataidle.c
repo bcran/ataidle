@@ -1,6 +1,6 @@
 /*-
  *  
- * Copyright 2004 Bruce Cran <bruce@cran.org.uk>.  All rights reserved.
+ * Copyright 2004 Rebecca Cran <rebecca@bsdio.com>.  All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,7 +31,7 @@
 /*-
  * ATAidle: a program to set the idle spindown timeout on ATA drives
  * 
- * Author: Bruce Cran <bruce@cran.org.uk>
+ * Author: Rebecca Cran <rebecca@bsdio.com>
  * Version: 0.7
  *
  */

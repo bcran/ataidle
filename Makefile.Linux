@@ -6,7 +6,7 @@ LIBS = -lm
 SOURCES = ataidle.c
 MAN = ataidle.8
 PROG = ataidle
-MAINTAINER = Bruce Cran <bruce@cran.org.uk>
+MAINTAINER = Rebecca Cran <rebecca@bsdio.com>
 
 all:	ataidle
 
