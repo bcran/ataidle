@@ -86,6 +86,12 @@ ata_getidleval(uint32_t idle_mins, uint16_t *timer_val)
 char * ata_getversionstring( unsigned short ata_version )
 {
 	char * version = (char*) malloc(10);
+
+	if(version == 0) { /* malloc failed */
+		fprintf(stderr, "malloc failed\n");
+		return 0;
+	}
+
 	memset(version, 0, 16);
 	
 	int i = 0;
@@ -102,10 +108,10 @@ char * ata_getversionstring( unsigned short ata_version )
 // standard *NIX usage instructions
 void usage()
 {
-	printf( "ataidle version 0.5\n\n"
+	printf( "ataidle version 0.6\n\n"
 			"usage: \n"
-			"ataidle [-h] [-l] [-i] [-s] [-I idle] [-S standby] [-A acoustic] [-P apm] "
-			"\t\tchannel device\n\n"
+			"ataidle [-h] [-l] [-i] [-s] [-I idle] [-S standby] [-A acoustic] [-P apm]\n"
+			"\tchannel device\n\n"
 			"arguments:\n"
 		    "-h\t\tshow this help\n"
 			"-l\t\tlist installed devices\n"
@@ -229,7 +235,12 @@ void strpack(char * buf, int from, int to)
 {
 	int numchars = (to-from)+1;
 	char *tmpbuf = (char*) malloc(numchars*sizeof(char));
-	
+
+	if(tmpbuf == 0) { /* malloc failed, skip the string packing */
+		fprintf(stderr, "malloc failed\n");
+		return;	
+	}
+
 	strncpy(tmpbuf, buf+from, numchars);
 	memset(buf+from, 0, numchars);
 	int i = 0;
@@ -461,10 +472,8 @@ ata_setstandby(struct ATA *ata, uint32_t chan, uint32_t dev, uint32_t standby_mi
 // all the other commands
 void ata_listdevices( struct ATA *ata )
 {
-	//uint32_t rc = 0;
-	
 	// first, do an IDENTIFY on each channel
-	uint32_t numchannels;
+	uint32_t numchannels = 20;
 	uint32_t numdevs;
 	uint32_t i;
 	
@@ -473,6 +482,10 @@ void ata_listdevices( struct ATA *ata )
 	
 	uint32_t identbuf_size = ( sizeof(struct ata_ident) * numdevs );
 	char * identbuf = (char *) malloc(identbuf_size);
+	if(identbuf == 0) { /* malloc failed, we can do nothing here but quit */
+		fprintf(stderr, "malloc failed, aborting.\n");
+		exit(EXIT_FAILURE);
+	}
 	memset(identbuf, 0, identbuf_size);
 	
 	for(i = 0; i < numchannels; i++) {
@@ -519,7 +532,7 @@ int32_t ata_ident(struct ATA *ata, uint32_t ata_chan, uint32_t ata_dev, struct a
 	strpack((char*)buf, 20, 39);
 
 	if(!rc)
-		memcpy(identity, buf, sizeof(struct ata_params));
+		memcpy(identity, buf, sizeof(struct ata_ident));
 
 	return rc;
 }

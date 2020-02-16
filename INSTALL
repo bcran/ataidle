@@ -4,3 +4,9 @@ install the binary into /usr/local/sbin, and install the man page into
 'make uninstall'.   
 Alternatively, the binary can
 be copied and run from a more convenient location.
+
+Linux Users:  You may have to edit Makefile.Linux to set the compiler 
+name - it's currently 'gcc-3.3' because a compiler which understands
+C99 must be used, and gcc 2.95 doesn't support it.   Some distributions
+such as gentoo use version 3.3 by default and thus don't have a 'gcc-3.3'
+executable.  In this case, change 'gcc-3.3' to 'gcc' and run 'make'.

@@ -1,6 +1,6 @@
 .\" man page for ATAidle
 .\" Contact bruce@cran.org.uk to correct errors or omissions
-.TH man 8 "29 January 2004" "0.4" "ATAidle"
+.TH man 8 "29 June 2004" "0.6" "ATAidle"
 .SH NAME
 ataidle \- a utility to spindown ata drives after a period of inactivity
 .SH SYNOPSIS
@@ -26,8 +26,10 @@ the standby timer option (-S) will immediately spin down the drive
 under normal circumstances, as will the standby immediately option (-s).
 If only a channel and device are specified, without options, information
 about the selected device will be shown.
-To set other parameters of the ATA drive, use atacontrol(8).  To see the
-health of your drive, look at sysutils/smartmontools - it monitors and
+To set other parameters of the ATA drive, use atacontrol(8) on FreeBSD, or
+hdparm(8) on Linux.  To see the
+health of your drive, look at sysutils/smartmontools
+(or apt-get install smartmontools in Debian) - it monitors and
 reports on the status of the drive by asking it to run health checks and
 report on parameters such as the number of bad sectors, the read error
 rate, and lots of other useful and potentially important data.
@@ -65,12 +67,55 @@ consumption of the drive, at the expense of performance.
 A very low
 .B apm_level
 will make the drive go into standby mode to save power.
+
+.SH NOTES
+Notes on AutoAcoustic (AAC) and APM support
+
+These features are experimental, but are believed to be safe to use.   They
+do, however, modify the behaviour of the drive mechanism as data is being
+read or written.   If there is a flaw in the controller it _could_ corrupt
+data, but I have no reason to suppose that such a fault exists.
+
+AAC and APM settings are vendor-specific, and not all intermediate values
+may be valid.  If you set an invalid APM value, you will be notified that
+it failed - when setting an AAC value you should check the output of
+ 'ataidle <chan> <dev>' to see if it has been updated.  If it hasn't, the
+value isn't supported and you should try a higher or lower setting.
+
+.IP
+
+Meaning of various AutoAcoustic values:
+
+.IP 0
+Acoustic management disabled
+.IP 1               
+Minimum acoustic output
+.IP 2-126   
+Intermediate acoustic output levels
+.IP 127             
+Maximum performance, maximum acoustic output
+
+Meaning of various APM values:
+
+.IP 0
+APM disabled
+.IP 1               
+Minimum power usage with Standby (spindown)
+.IP 2-127   
+Intermediate power usage with Standby
+.IP 128             
+Minimum power usage without Standby (no spindown)
+.IP 129-253 
+Intermediate power usage without Standby
+.IP 254             
+Maximum performance, maximum power usage
 .SH BUGS
-Probably.  It should probably not be named ATAidle,
+It should probably not be named ATAidle,
 since it currently does a lot more than just setting the
 idle timeout on the drive.
 .SH AUTHOR
 Bruce Cran <bruce@cran.org.uk>
 .SH "SEE ALSO"
 .BR atacontrol (8),
+.BR hdparm (8),
 .BR smartctl (8)

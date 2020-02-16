@@ -27,3 +27,32 @@ Thu Jan 29 20:30 2004	brucec
 	*	More information is now
 		reported when no paramteres
 		are given.
+
+Tue Feb 03 23:45 2004	brucec
+	*	Added drive reinitialisation
+		support following AAC or APM settings.
+		This fixes the case where settings are
+		not activated.   Also added documentation
+		about AAC and APM, and now scale AAC from
+		1-127, instead of 127-254
+
+Sat Feb 07 21:48 2004	brucec
+	*	Removed drive reinitialization, turns out
+		it isn't needed - atacontrol doesn't see new
+		settings, but 'ataidle <chan> <dev>' does, and
+		new settings are very audibly active!  Add '0'
+		value for APM and AAC which disables drive 
+		management for said feature.
+
+Sun Feb 08 21:32 2004	brucec
+	*	Ported to Linux, cleaned up lots of code,
+		split into OS-dependant/independant code,
+		added my own structures to use in preference
+		to OS-supplied ones.
+
+Tue June 29 23:40 2004  brucec
+	*	Fixed a uninitialized variable which showed up
+		due to a problem with the FreeBSD ATA driver
+		returning an error code for ATA_GETMAXCHAN.
+		At the same time, add return code checking for 
+		all malloc calls, and handle appropriately

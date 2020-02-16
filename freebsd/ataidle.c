@@ -32,7 +32,7 @@
  * ATAidle: a program to set the idle spindown timeout on ATA drives
  * 
  * Author: Bruce Cran <bruce@cran.org.uk>
- * Version: 0.5
+ * Version: 0.6
  *
  */
 
@@ -86,7 +86,7 @@ ata_cmd(struct ATA *ata, int chan, int dev, int atacmd, int drivercmd)
 	int32_t rc = 0;
 
 	// check that the device actually exists, first
-	if(!ata_devpresent( ata, chan, dev )) {
+	if(!ata_devpresent( ata, chan, dev ) && (atacmd != ATAGMAXCHANNEL)) {
 		rc = -1;
 	}
 
@@ -130,6 +130,11 @@ void ata_setfeature_param(struct ATA *ata, int feature_val)
 void ata_setdataout_params(struct ATA *ata, char ** databuf, int nbytes)
 {
 	*databuf = (char*) malloc(nbytes);
+	if(databuf == 0) { /* malloc failed, there's no way to recover here */
+		fprintf(stderr, "malloc failed. aborting\n");
+		exit(EXIT_FAILURE);
+	}
+
 	memset(*databuf, 0, nbytes);
 	ata->atacmd.u.request.data = *databuf;
 	ata->atacmd.u.request.count = nbytes;

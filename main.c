@@ -32,7 +32,7 @@
  * ATAidle: a program to set the idle spindown timeout on ATA drives
  * 
  * Author: Bruce Cran <bruce@cran.org.uk>
- * Version: 0.5
+ * Version: 0.6
  *
  */
 
@@ -72,6 +72,11 @@ int main( int argc, char ** argv )
 	uint32_t maxchan = 0;
 	bool needchandev;
 	char * optstr = "hlA:S:sI:iP:";
+
+	if (ata == 0) { /* malloc failed, abort */
+		fprintf(stderr, "malloc failed, aborting.\n");
+		exit(EXIT_FAILURE);
+	}
 
 	if( (argc == 1) || (!checkargs(argc, argv, optstr, &needchandev)) )
 		usage();
