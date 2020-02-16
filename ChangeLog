@@ -1,2 +1,29 @@
 Thu Jan 1 01:25 2004	brucec
 	*	released 0.01
+
+Fri Jan 2 04:20 2004	brucec
+	*	released 0.02
+		
+		remove automake/autoconf junk,
+		tidy code.
+
+Sun Jan 11 12:46 2004	brucec
+	*	released 20040111
+		added power management and acoustic
+		level features, and tidied more code
+
+Sun Jan 11 19:50 2004	brucec
+	*	released 0.3
+		added support for listing installed
+		devices, and getting information about
+		a device.
+
+Tue Jan 27 23:05 2004	brucec
+	*	added support for immediately
+		transitioning to idle and standby 
+		power saving modes
+
+Thu Jan 29 20:30 2004	brucec
+	*	More information is now
+		reported when no paramteres
+		are given.

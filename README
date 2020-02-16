@@ -2,12 +2,24 @@ ataidle sets the idle timer on ATA hard drives, so they spin down when the
 period of inactivity has expired.  To use it, you must be running FreeBSD 
 with ATAng, so basically FreeBSD 5.1 or newer.
 
-Usage: atacontrol -S <idle_mins> <channel> <device>
+Usage: atacontrol [-h] [-l] [-s] [-i] [-I idle_mins] [-S standby_mins] [-A acoustic_level] [-P apm_level] channel device
 
-You can find the correct channel and device from the output of 
-'atacontrol list'.   ataidle does not currently do extensive error checking 
-for running the commands on channels/devices which do not have ATA drives 
-attached.  This should be harmless, and cause it to pause until the 
-timeout (100s) has elapsed.  You may get a messages from the kernel about 
-a missing interrupt, but from my testing it would not appear to cause 
-problems.
+where
+
+-h		shows usage information
+-l		lists installed devices
+-I		sets the idle level spindown timer
+-i		sets the drive into idle mode immediately
+-S		sets the standby level spindown timer
+-s		sets the drive into standby mode immediately
+-A		sets the acoustic level, value between 128 and 254
+-P		sets the power management level, value between 1 and 254
+
+channel	the channel of ata controller
+device	the device of the ata controller (0 or 1)
+
+You can find the correct channel and device by listing the installed
+devices with 'ataidle -l channel device'
+
+Supplying channel and device numbers without any parameters will display information about the
+specified device.

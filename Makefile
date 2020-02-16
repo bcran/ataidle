@@ -1,15 +1,26 @@
-installdir = /usr/local/sbin
+PREFIX = /usr/local
+CC ?= gcc
+CFLAGS += -std=c99 -Wall -pedantic
+LIBS =
+SOURCES = ataidle.c
+MAN = ataidle.8
+PROG = ataidle
+MAINTAINER = Bruce Cran <bruce@cran.org.uk>
 
-ataidle: ataidle.c
-	
+all:	ataidle
+
+ataidle:	ataidle.c
+
 ataidle.c:
-	gcc -o ataidle ataidle.c -std=c99
+	$(CC) $(CFLAGS) $(LIBS) -o $(PROG) $(SOURCES)
 
 install:
-	cp ataidle $(installdir)
+	install $(PROG) $(PREFIX)/sbin
+	install $(MAN)  $(PREFIX)/man/man8
 
 uninstall:
-	rm $(installdir)/ataidle
+	rm $(PREFIX)/sbin/$(PROG)
+	rm $(PREFIX)/man/man8/$(MAN)
 
 clean: 
-	rm ataidle
+	rm -f *.o $(PROG)

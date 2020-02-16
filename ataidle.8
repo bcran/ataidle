@@ -1,30 +1,76 @@
 .\" man page for ATAidle
 .\" Contact bruce@cran.org.uk to correct errors or omissions
-.TH man 1 "02 January 2004" "0.02" "ATAidle"
+.TH man 8 "29 January 2004" "0.4" "ATAidle"
 .SH NAME
 ataidle \- a utility to spindown ata drives after a period of inactivity
 .SH SYNOPSIS
 .\" Syntax goes here. 
-.BR ataidle [-h] -S <idle_mins> <channel> <device>
-.SH EXAMPLES
-.B SYNOPSIS
+.B ataidle [-h] [-l] [-i] [-s] [-I 
+.I idle_mins
+.B ] [-S
+.I standby_mins
+.B ] [-A
+.I acoustic_level
+.B ] [-P
+.I apm_level
+.B ]
+.I channel 
+.I device
 .SH DESCRIPTION
 .B ATAidle
+sets various power management features on hard drives, including
+timeouts to switch to both idle and standby power saving modes,
+and setting the APM and auto-acoustic levels.   Note that while the
+idle immediately (-i) mode does not spin down the drive immediately,
+the standby timer option (-S) will immediately spin down the drive
+under normal circumstances, as will the standby immediately option (-s).
+If only a channel and device are specified, without options, information
+about the selected device will be shown.
+To set other parameters of the ATA drive, use atacontrol(8).  To see the
+health of your drive, look at sysutils/smartmontools - it monitors and
+reports on the status of the drive by asking it to run health checks and
+report on parameters such as the number of bad sectors, the read error
+rate, and lots of other useful and potentially important data.
 .SH OPTIONS
-.SH FILES
-.P 
-.SH SEE ALSO
-.BR man (1), 
-.BR man (7),
-.BR apropos (1),
-.BR less (1),
-.BR groff (1), 
-.BR catman (8)
+.IP -h
+show usage information
+.IP -l
+list installed devices
+.IP -i
+put the drive into idle mode immediately
+.IP -s
+put the drive into standby mode immediately
+.IP -I 
+spins down the drive into
+.B idle
+mode after idle_mins minutes of inactivity
+.IP -S
+spins down the drive into
+.B standby
+mode after standby_mins minutes of inactivity.
+However, using this mode usually immediately spins
+down the drive.
+.IP -A
+set the
+.B acoustic
+level of the hard drive.  This allows you to set how 
+loud the drive is while it's operating.  Reducing the
+acoustic level will come at the expense of performance,
+by making the drive read/write data slower.
+.IP -P
+set the
+.B Advanced Power Management
+level of the drive.  This allows you to lower the power
+consumption of the drive, at the expense of performance.
+A very low
+.B apm_level
+will make the drive go into standby mode to save power.
 .SH BUGS
-Probably lots 
+Probably.  It should probably not be named ATAidle,
+since it currently does a lot more than just setting the
+idle timeout on the drive.
 .SH AUTHOR
-.nf
-Bruce Cran (bruce@cran.org.uk)
-.fi
-.SH HISTORY
-
+Bruce Cran <bruce@cran.org.uk>
+.SH "SEE ALSO"
+.BR atacontrol (8),
+.BR smartctl (8)
